@@ -1,12 +1,10 @@
 
 '''
 [Input Example 1]
-3 3
-3 1 2
-4 1 4
-2 2 2
+5
+R R R U D D
 [Output Example 1]
-2
+3 4
 '''
 
 

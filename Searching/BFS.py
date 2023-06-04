@@ -35,3 +35,5 @@ visited = [False] * 9
 
 # 정의된 BFS 함수 호출
 bfs(graph, 1, visited)
+
+# 1 2 3 8 7 4 5 6
