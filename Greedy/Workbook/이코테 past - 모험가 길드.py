@@ -12,5 +12,3 @@ for i in data:
         person_cnt = 0
         
 print(group_cnt)
-        
-    
