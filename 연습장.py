@@ -1,42 +1,68 @@
-from itertools import permutations
+# 입력 순서 : + - x /
 
-def solution(n, weak, dist):
-    
-    length = len(weak)
-    
-    # 주어진 원형을 일자로 만듬 
-    # (9/10 지점에서 시작해도 한 바퀴만 더 돌면 되므로 2배로 확장)
-    for i in range(length):
-        weak.append(weak[i] + n)
-        
-    # 모든 친구를 투입해도 점검이 안되는 경우 체크용 (+1)
-    answer = len(dist) + 1
-    
-    # 완전 탐색 : 모든 취약지점을 시작점으로 탐색
-    for start in range(length):
-        
-        # 1. 친구들을 줄 세우는 모든 경우의수에 대해 확인 (순열)
-        for friends in list(permutations(dist, len(dist))):
-            cnt = 1
+# max 연산 순서 : / - + x (3 1 0 2) 
+# min 연산 순서 : x + - / (2 0 1 3)
+
+
+
+def cal_divide(num, cnt, cal):
+    num_parse = num
+    if (cal[3] != 0):
+        for i in range (cnt, cnt + cal[3]):
+            num_parse = abs(num) // data[i]
+            num = -num_parse if num < 0 else num_parse
+    cnt += cal[3]
+    return num, cnt
+
+def cal_minus(num, cnt, cal):
+    if (cal[1] != 0):
+        for i in range (cnt, cnt + cal[1]):
+            num -= data[i]
+    cnt += cal[1]
+    return num, cnt
+
+def cal_plus(num, cnt, cal):  
+    if (cal[0] != 0):
+        for i in range (cnt, cnt + cal[0]):
+            num += data[i]
+    cnt += cal[0]
+    return num, cnt     
+
+def cal_multiply(num, cnt, cal): 
+    if (cal[2] != 0):
+        for i in range (cnt, cnt + cal[2]):
+            num *= data[i] 
+    cnt += cal[2]
+    return num, cnt
+
+def cal_max(max_val, cal):
+    cnt = 1
+    max_val, cnt = cal_divide(max_val, cnt, cal)
+    max_val, cnt = cal_minus(max_val, cnt, cal)
+    max_val, cnt = cal_plus(max_val, cnt, cal)
+    max_val, cnt = cal_multiply(max_val, cnt, cal)
+    return max_val
+
+# def cal_min(min_val, cal):
+#     cnt = 1
+#     min_val, cnt = cal_multiply(min_val, cnt, cal)
+#     min_val, cnt = cal_plus(min_val, cnt, cal)
+#     min_val, cnt = cal_minus(min_val, cnt, cal)
+#     min_val, cnt = cal_divide(min_val, cnt, cal)
+#     return min_val
+
+
+n = int(input())
+data = list(map(int, input().split()))
+cal = list(map(int, input().split()))
+
+data_len = len(data)
+max_val = data[0]
+min_val = data[0]
+max_val = cal_max(max_val, cal)
+# min_val = cal_min(min_val, cal)
+print(max_val)
+# print(min_val)
+
+
             
-            # 현재 투입 된 친구가 점검할 수 있는 마지막 위치
-            last_check = weak[start] + friends[cnt - 1]
-            
-            # 2. 시작 취약점부터 마지막 취약점 까지 확인
-            for index in range(start, start + length):
-                # 만약 다음 취약점을 점검할 수 없다면
-                if last_check < weak[index]:
-                    # 다음 친구 투입
-                    cnt += 1
-                    # 점검 마치기 전 투입할 친구가 없다면 해당 순서 경우의수 종료
-                    if cnt > len(dist):
-                        break
-                    # 다음 반복문에서 사용할 투입된 친구의 마지막 점검 가능 위치 세팅
-                    last_check = weak[index] + friends[cnt - 1]
-            
-            # 해당 순서에서의 친구 투입 수를 비교하여 갱신
-            answer = min(answer, cnt)
-            
-    if answer > len(dist):
-        return -1
-    return answer
