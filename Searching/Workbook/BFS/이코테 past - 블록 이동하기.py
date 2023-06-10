@@ -57,3 +57,4 @@ def solution(board):
                 q.append((next_pos, cost + 1))
                 visited.append(next_pos)
     return 0
+
