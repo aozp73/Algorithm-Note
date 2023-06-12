@@ -41,10 +41,22 @@ def last(array, target, start, end):
     # 해당 값을 가지는 원소 중에서 가장 오른쪽에 있는 경우에만 인덱스 반환
     if (mid == n - 1 or target < array[mid + 1]) and array[mid] == target:
         return mid
-    # 중간점의 값 보다 찾고자 하는 값이 작거나 같은 경우 왼쪽 확인
+    # 중간점의 값 보다 찾고자 하는 값이 작은 경우 왼쪽 확인
     elif array[mid] > target:
         return last(array, target, start, mid - 1)
-    # 중간점의 값 보다 찾고자 하는 값이 큰 경우 오른쪽 확인
+    # 중간점의 값 보다 찾고자 하는 값이 크거나 같은 경우오른쪽 확인
     else:
         return first(array, target, mid + 1, end)
     
+n, x = map(int, input().split()) # 데이터의 개수, 찾고자 하는 값
+array = list(map(int, input().split())) # 전체 데이터
+
+# 값이 x인 데이터의 개수 계산
+cnt = count_by_value(array, x)
+
+# 값이 x인 원소가 존재하지 않는다면
+if cnt == 0:
+    print(-1)
+# 존재한다면
+else:
+    print(cnt)
