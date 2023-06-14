@@ -1,31 +1,20 @@
-# 최소 편집 거리 계산에 사용되는 다이나믹 함수
-def edit_dist(str1, str2):
-    n = len(str1)
-    m = len(str2)
-    
-    # 2차원 DP 테이블 초기화
-    dp = [[0] * (m + 1) for _ in range(n + 1)]
-    
-    # DP 테이블 초기 설정 
-    for i in range(1, n + 1):
-        dp[i][0] = i
-    for j in range(1, m + 1):
-        dp[0][j] = j
-        
-    # 최소 편집 거리 계산
-    for i in range(1, n + 1):
-        for j in range(1, m + 1):
-            # 문자가 같다면, 왼쪽 위에 해당하는 수 대입
-            if str1[i - 1] == str2[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1]
-            else:
-                #문자가 다르다면, 삽입(왼쪽), 삭제(위쪽), 교체(왼쪽 위) 중에서 최소 비용 대입
-                dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j] ,dp[i - 1][j - 1])
-    
-    return dp[n][m]
+INF = int(1e9)
 
-# str1: 편집할 문자, str2: str1이 편집 완성할 대상
-str1 = input()
-str2 = input()
+n = int(input())
+m = int(input())
 
-print(edit_dist(str1, str2))
+graph = [[INF] * (n + 1) for _ in range(n + 1)]
+
+for a in range(1, n + 1):
+    for b in range(1, n + 1):
+        if a == b:
+            graph[a][b] = 0
+
+for _ in range(m):
+    a, b, c = map(int, input().split())
+    graph[a][b] = c
+    
+for k in range(1, n + 1):
+    for a in range(1, n + 1):
+        for b in range(1, n + 1):
+            graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
