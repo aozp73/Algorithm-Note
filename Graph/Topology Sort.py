@@ -11,7 +11,7 @@ graph = [[] for i in range(v + 1)]
 for _ in range(e):
     a, b = map(int, input().split())
     graph[a].append(b) # 정점 A에서 B로 이동 가능
-    # 진입 차수를 1 증가
+    # 진입 차수를 1 증가    
     indegree[b] += 1
 
 # 위상 정렬 함수

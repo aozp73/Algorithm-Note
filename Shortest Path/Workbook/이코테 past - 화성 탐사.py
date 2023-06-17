@@ -8,10 +8,10 @@ dy = [0, 1, 0, -1]
 
 # 전체 테스트 케이스(Test Case)만큼 반복
 for tc in range(int(input())):
-    # 노드의 개수를 입력받기
+    # n 노드개수
     n = int(input())
 
-    # 전체 맵 정보를 입력받기
+    # graph 전체 맵 정보
     graph = []
     for i in range(n):
         graph.append(list(map(int, input().split())))
