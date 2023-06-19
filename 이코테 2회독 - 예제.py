@@ -173,3 +173,219 @@
         
 # print(cnt)
     
+'탐색, 음료수 얼려 먹기 TP'
+# n, m = map(int, input().split())
+# maps = []
+# for _ in range(n):
+#     maps.append(list(map(int, input().split())))
+
+# def dfs(x, y):
+#     if not ( -1 < x < n and -1 < y < m):
+#         return False
+    
+#     if maps[x][y] == 0:
+#         maps[x][y] = 1
+#         # 동 남 서 북 재귀 호출
+#         dfs(x, y+1)
+#         dfs(x+1, y)
+#         dfs(x, y-1)
+#         dfs(x-1, y)
+#         return True
+    
+#     return False
+        
+# cnt = 0
+# for i in range(n):
+#     for j in range(m):
+        
+#         if dfs(i, j) == True:
+#             cnt += 1
+            
+# print(cnt)
+
+'탐색, 미로 탈출 TP'
+# from collections import deque
+
+# n, m = map(int, input().split())
+# maps = []
+# for _ in range(n):
+#     maps.append(list(map(int, input())))
+# # 동 남 서 북
+# dx = [0, 1, 0, -1]
+# dy = [1, 0, -1, 0]
+
+# def bfs(x, y):
+#     queue = deque()
+#     queue.append((x, y))
+    
+#     while queue:
+#         x, y = queue.popleft()
+#         for i in range(4):
+#             nx = x + dx[i]
+#             ny = y + dy[i]
+            
+#             if not (0 <= nx < n and 0 <= ny < m):
+#                 continue
+#             if maps[nx][ny] == 0:
+#                 continue
+            
+#             if maps[nx][ny] == 1:
+#                 maps[nx][ny] = maps[x][y] + 1
+#                 queue.append((nx, ny))
+                
+#     return maps[n - 1][m - 1]
+    
+# print(bfs(0, 0))
+                
+    
+'이진 탐색, 부품 찾기'
+# n = int(input())
+# sell_data = list(map(int, input().split()))
+# m = int(input())
+# search_data = list(map(int, input().split()))
+
+# def binary_search(sell_data, target, start, end):
+#     if start > end:
+#         return 'no'
+#     mid = (start + end) // 2
+    
+#     if sell_data[mid] == target:
+#         return 'yes'
+#     elif sell_data[mid] > target:
+#         return binary_search(sell_data, target, start, mid-1)
+#     else:
+#         return binary_search(sell_data, target, mid+1, end)
+    
+# for k in search_data:
+#     print(binary_search(sell_data, k, 0, n-1))
+
+# n = int(input())
+# array = [0] * 10001
+
+# for i in input().split():
+#     array[int(i)] = 1
+    
+# m = int(input())
+# for k in input().split():
+#     if array[int(k)] == 1:
+#         print('yes', end=' ')
+#     else:
+#         print('no', end=' ')
+
+'이진 탐색, 떡볶이 떡 만들기 TP'
+# n, m = list(map(int, input().split()))
+# array = list(map(int, input().split()))
+
+# start = 0
+# end = max(array)
+
+# res = 0
+# while(start <= end):
+#     total = 0
+#     mid = (start + end) // 2
+#     for x in array:
+#         if x > mid:
+#             total += (x - mid)
+    
+#     if total < m:
+#         end = mid - 1
+#     else:
+#         res = mid
+#         start = mid + 1
+        
+# print(res)
+
+'다이나믹, 피보나치'
+# 일반 재귀
+# def fibo(x):
+#     if x == 1 or x == 2:
+#         return 1
+#     return fibo(x - 1) + fibo(x - 2)
+
+# print(fibo(4))
+
+# 탑다운 - 메모제이션 
+# d = [0] * 100
+
+# def fibo(x):
+#     if x == 1 or x == 2:
+#         return 1
+#     if d[x] != 0:
+#         return d[x]
+    
+#     d[x] = fibo(x-1) + fibo(x-2)
+#     return d[x]
+
+# 보텀업 - 반복
+# d = [0] * 100
+
+# d[1] = 1
+# d[2] = 2
+# n = 99
+
+# for i in range(3, n + 1):
+#     d[i] = d[i - 1] + d[i - 2]
+
+# print(d[n])
+
+'다이나믹, 1로 만들기 TP'
+# x = int(input())
+
+# d = [0] * 30001
+
+# for i in range(2, x + 1):
+#     d[i] = d[i - 1] + 1 
+    
+#     if i % 2 == 0:
+#         d[i] = min(d[i], d[i // 2])
+#     if i % 3 == 0:
+#         d[i] = min(d[i], d[i // 3])
+#     if i % 5 == 0:
+#         d[i] = min(d[i], d[i // 5])
+        
+# print(d[x])
+
+'다이나믹, 개미 전사'
+# n = int(input())
+# array = list(map(int, input().split()))
+
+# d = [0] * 100
+
+# d[0] = array[0]
+# d[1] = max(array[0], array[1])
+
+# for i in range(2, n): 
+#     d[i] = max(d[i-1], d[i-2]+array[i])
+    
+# print(d[n - 1])
+
+'다이나믹, 바닥 공사 TP'
+# n = int(input())
+
+# d = [0] * 1001
+
+# d[1] = 1
+# d[2] = 3
+# for i in range(3, n+1):
+#     d[i] = (d[i-1] + d[i-2] * 2) % 796796
+
+# print(d[n])
+
+'다이나믹, 효율적인 화폐 구성 TP'
+# n, m = map(int, input().split())
+# array = []
+# for i in range(n):
+#     array.append(int(input()))
+
+# d = [10001] * (m + 1)
+
+# for i in range(n):
+#     for j in range(array[i], m + 1):
+#         d[j] = min(d[j], d[j - array[i]] + 1)
+
+# if d[m] == 10001:
+#     print(-1)
+# else:
+#     print(d[m])
+    
+    
