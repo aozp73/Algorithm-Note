@@ -388,4 +388,182 @@
 # else:
 #     print(d[m])
     
+'최단거리, 미래 도시'
+# INF = int(1e9)
+
+# n, m = map(int, input().split())
+# graph = [[INF] * (n + 1) for _ in range(n + 1)]
+
+# for i in range(1, n + 1):
+#     for j in range(1, n + 1):
+#         graph[i][j] = 0
+
+# for _ in range(m):
+#     a, b = map(int, input().split())
+#     graph[a][b] = 1
+#     graph[b][a] = 1
     
+# x, k = map(int, input().split())
+
+# for k in range(1, n + 1):
+#     for a in range(1, n + 1):
+#         for b in range(1, n + 1):
+#             graph[a][b] = min(graph[a][b], graph[a][k]+graph[k][b])
+            
+# distance = graph[1][k] + graph[k][x]
+
+# if distance >= INF:
+#     print("-1")
+# else:
+#     print(distance)
+
+'최단거리, 전보'
+# import heapq
+# import sys
+# input = sys.stdin.readline
+# INF = int(1e9)
+
+# n, m, start = map(int, input().split())
+
+# graph = [[] for _ in range(n + 1)]
+# distance = [INF] * (n + 1)
+
+# for _ in range (m):
+#     a, b, c = map(int, input().split())
+#     graph[a].append((b, c))
+    
+# def dijkstra(start):
+#     q = []
+#     heapq.heappush(q, (0, start))
+#     distance[start] = 0
+    
+#     while q:
+#         dist, now = heapq.heappop(q)
+#         if distance[now] < dist:
+#             continue
+        
+#         for i in graph[now]:
+#             cost = dist + i[0]
+            
+#             if cost < distance[i[0]]:
+#                 distance[i[0]] = cost
+#                 heapq.heappush(q, (cost, i[0]))
+                
+# dijkstra(start)
+
+# cnt = 0
+# max_time = 0
+
+# for i in distance:
+#     if i != INF:
+#         cnt += 1
+#         max_time = max(max_time, distance[i])
+
+# print(cnt - 1, max_time)
+
+'그래프, 팀 결성'
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else:
+#         parent[a] = b
+        
+# n, m = map(int, input().split())
+# parent = [0] * (n + 1)
+
+# for i in range(n + 1):
+#     parent[i] = i
+    
+# for i in range(m):
+#     oper, a, b = map(int, input().split())
+    
+#     if oper == 0:
+#         union_parent(parent, a, b)
+#     elif oper == 1:
+#         if find_parent(parent, a) == find_parent(parent, b):
+#             print('YES')
+#         else:
+#             print('NO')
+
+'그래프, 도시 분할 계획'
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else:
+#         parent[a] = b
+
+# v, e = map(int, input().split())
+# parent = [0] * (v + 1)
+
+# edges = []
+
+# for _ in range(e):
+#     a, b, cost = map(int, input().split())
+#     edges.append((cost, a, b))
+    
+# edges.sort()
+# sum_cost = 0
+# max_cost = 0
+
+# for edge in edges:
+#     cost, a, b = edge
+    
+#     if find_parent(parent, a) != find_parent(parent, b):
+#         union_parent(parent, a, b)
+#         sum_cost += cost
+#         max_cost = cost
+        
+# print(sum_cost - max_cost)
+
+'그래프, 커리큘럼 TP'
+# from collections import deque
+# import copy
+
+# v = int(input())
+
+# indegree = [0] * (v+1)
+# graph = [[] for i in range(v + 1)]
+# time = [0] * (v + 1)
+
+# for i in range(1, v + 1):
+#     data = list(map(int, input().split()))
+#     time[i] = data[0]
+#     for x in data[1:-1]:
+#         indegree[i] += 1
+#         graph[x].append(i)
+        
+# def topology_sort():
+#     res = copy.deepcopy(time)
+#     q = deque()
+    
+#     for i in range(1, v+1):
+#         if indegree[i] == 0:
+#             q.append(i)
+            
+#     while q:
+#         now = q.popleft()
+#         for i in graph[now]:
+#             res[i] = max(res[i], res[now] + time[i])
+#             indegree[i] -= 1
+            
+#             if indegree[i] == 0:
+#                 q.append(i)
+                
+#     for i in range(1, v + 1):
+#         print(res[i])
+
+# topology_sort()
