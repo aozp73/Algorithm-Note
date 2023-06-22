@@ -101,3 +101,216 @@
 #     res = sorted(q, key=lambda x: x[1])
 #     return res[(k - now_time) % remainder_food_cnt][1]
 
+'구현, 럭키 스트레이트'
+# data = input()
+# half_len = len(data) // 2
+
+# left_sum = 0
+# right_sum = 0
+# for i in range(half_len):
+#     left_sum += int(data[i])
+# for j in range(half_len, 2 * half_len):
+#     right_sum += int(data[j])
+
+# if left_sum == right_sum:
+#     print('LUCKY')
+# else:
+#     print('READY')
+
+
+'구현, 문자열 재정렬'
+# data = input()
+# list = []
+# cnt = 0
+# for i in data:
+#     if i.isalpha():
+#         list.append(i)
+#     else:
+#         cnt += int(i)
+
+# list.sort()
+# if cnt != 0:
+#     list.append(cnt)
+
+# for i in list:
+#     print(i, end='') 
+# # print(''.join(list))
+
+'구현, 문자열 압축 DP'
+# def solution(s):
+#     answer = len(s)
+    
+#     for step in range(1, len(s) // 2 + 1):
+#         compressed = ""
+#         prev = s[0:step]
+#         cnt = 1
+        
+#         for j in range(step, len(s), step):
+#             if prev == s[j:j + step]:
+#                 cnt += 1
+#             else:
+#                 compressed += str(cnt) + prev if cnt >= 2 else prev
+#                 prev = s[j:j + step]
+#                 cnt = 1
+#         compressed += str(cnt) + prev if cnt >= 2 else prev
+#         answer = min(answer, len(compressed))
+        
+#     return answer
+
+'구현, 자물쇠와 열쇠'
+# def rotate_90_degree(a):
+#     # 회전한 리스트를 사전에 생성하기 위해 행, 열의 길이 계산
+#     n = len(a)
+#     m = len(a[0])
+#     res = [[0] * n for _ in range(m)]
+
+#     for i in range(n):
+#         for j in range(m):
+#             res[j][n - i - 1] = a[i][j]
+#     return res
+
+# def unlock_check(new_lock, m, n):
+#     for i in range(m, m + n):
+#         for j in range(m, m + n):
+#             if new_lock[i][j] != 1:
+#                 return False
+    
+#     return True
+
+# def solution(key, lock):
+#     n = len(lock)
+#     m = len(key)
+    
+#     new_lock = [[0] * (n + 2 * m) for _ in range(n + 2 * m)]
+#     for i in range(n):
+#         for j in range(n):
+#             new_lock[i+m][j+m] = lock[i][j]
+    
+#     for rotate in range(4):
+#         key = rotate_90_degree(key)
+        
+#         for i in range(1, n + m):
+#             for j in range(1, n + m):
+
+#                 for x in range(m):
+#                     for y in range(m):
+#                         new_lock[i + x][j + y] += key[x][y]
+                
+#                 if unlock_check(new_lock, m, n):
+#                     return True
+                
+#                 for x in range(m):
+#                     for y in range(m):
+#                         new_lock[i + x][j + y] -= key[x][y]
+            
+#     return False
+
+'구현, 뱀'
+# from collections import deque
+
+# n = int(input())
+# k = int(input())
+
+# maps = [[0] * (n + 1) for _ in range (n + 1)] # 맵 기본 0
+# for _ in range(k):
+#     x, y = map(int, input().split())
+#     maps[x][y] = 2 # 사과 있으면 2 
+    
+# l = int(input())
+# move_info = []
+# for _ in range(l):
+#     time, direction = input().split()
+#     move_info.append((int(time), direction))
+
+# # 동 남 북 서
+# dx = [0, 1, 0, -1]
+# dy = [1, 0, -1, 0]
+    
+# def turn_direction(direction, move_info):
+#     if move_info == 'L':
+#         direction = (direction - 1) % 4
+#     else:
+#         direction = (direction + 1) % 4
+#     return direction
+
+# def simulate():
+#     x, y = 1, 1
+#     maps[x][y] = 1 # 뱀이 차지하는 곳 1
+#     queue = deque()
+#     queue.append((x, y)) # 뱀의 꼬리 위치 저장
+    
+#     time_now = 0
+#     time_index = 0
+#     direction = 0
+
+#     while True:
+#         nx = x + dx[direction]
+#         ny = y + dy[direction]
+        
+#         # 이동 한 위치가 맵 밖, 자기 몸이 아닐 경우
+#         if 1 <= nx <= n and 1 <= ny <= n and maps[nx][ny] != 1:
+#             # 사과가 있는 경우
+#             if maps[nx][ny] == 2:
+#                 maps[nx][ny] = 1
+#                 queue.append((nx, ny))
+                
+#             if maps[nx][ny] == 0:
+#                 maps[nx][ny] = 1
+#                 queue.append((nx, ny))
+#                 # 꼬리 이동
+#                 a, b = queue.popleft()
+#                 maps[a][b] = 0
+#         # 벽이나 꼬리에 부딪힌 경우   
+#         else:
+#             time_now += 1
+#             break
+        
+#         x, y = nx, ny
+#         time_now += 1
+        
+#         # 도착한 곳 회전여부 확인
+#         if time_index < l and time_now == move_info[time_index][0]:
+#             direction = turn_direction(direction, move_info[time_index][1])
+#             time_index += 1
+            
+#     return time_now
+            
+# print(simulate())
+            
+
+    
+'기둥과 보 설치'
+def frame_check(answer):
+
+    for x, y, a in answer:
+        # 기둥일 경우
+        if a == 0:
+            if y == 0 or [x, y, 1] in answer or [x-1, y, 1] in answer or [x, y - 1, 0] in answer:
+                continue
+            else:
+                return False
+        
+        # 보일 경우
+        elif a == 1:
+            if [x, y-1, 0] in answer or [x+1, y-1, 0] in answer or ([x-1, y, 1] in answer and [x+1, y, 1] in answer):
+                continue
+            else:
+                return False
+    return True
+            
+def solution(n, build_frame):
+    answer = []
+    for x, y, a, b in build_frame:
+        # 설치
+        if b == 1:
+            answer.append([x, y, a])
+            if not frame_check(answer):
+                answer.remove([x, y, a])
+            
+        # 삭제
+        if b == 0:
+            answer.remove([x, y, a])
+            if not frame_check(answer):
+                answer.append([x, y, a])
+
+    return sorted(answer)
