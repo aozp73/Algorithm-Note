@@ -277,40 +277,106 @@
             
 # print(simulate())
             
+'구현, 기둥과 보 설치'
+# def frame_check(answer):
 
-    
-'기둥과 보 설치'
-def frame_check(answer):
-
-    for x, y, a in answer:
-        # 기둥일 경우
-        if a == 0:
-            if y == 0 or [x, y, 1] in answer or [x-1, y, 1] in answer or [x, y - 1, 0] in answer:
-                continue
-            else:
-                return False
+#     for x, y, a in answer:
+#         # 기둥일 경우
+#         if a == 0:
+#             if y == 0 or [x, y, 1] in answer or [x-1, y, 1] in answer or [x, y - 1, 0] in answer:
+#                 continue
+#             else:
+#                 return False
         
-        # 보일 경우
-        elif a == 1:
-            if [x, y-1, 0] in answer or [x+1, y-1, 0] in answer or ([x-1, y, 1] in answer and [x+1, y, 1] in answer):
-                continue
-            else:
-                return False
-    return True
+#         # 보일 경우
+#         elif a == 1:
+#             if [x, y-1, 0] in answer or [x+1, y-1, 0] in answer or ([x-1, y, 1] in answer and [x+1, y, 1] in answer):
+#                 continue
+#             else:
+#                 return False
+#     return True
             
-def solution(n, build_frame):
-    answer = []
-    for x, y, a, b in build_frame:
-        # 설치
-        if b == 1:
-            answer.append([x, y, a])
-            if not frame_check(answer):
-                answer.remove([x, y, a])
+# def solution(n, build_frame):
+#     answer = []
+#     for x, y, a, b in build_frame:
+#         # 설치
+#         if b == 1:
+#             answer.append([x, y, a])
+#             if not frame_check(answer):
+#                 answer.remove([x, y, a])
             
-        # 삭제
-        if b == 0:
-            answer.remove([x, y, a])
-            if not frame_check(answer):
-                answer.append([x, y, a])
+#         # 삭제
+#         if b == 0:
+#             answer.remove([x, y, a])
+#             if not frame_check(answer):
+#                 answer.append([x, y, a])
 
-    return sorted(answer)
+#     return sorted(answer)
+
+'구현, 치킨 배달 TP'
+# from itertools import combinations
+
+# n, m = map(int, input().split())
+
+# house = []
+# chicken = []
+# for i in range(n):
+#     map_data = list(map(int, input().split()))
+#     for j in range(n):
+#         if map_data[j] == 1:
+#             house.append((i, j))
+#         elif map_data[j] == 2:
+#             chicken.append((i, j))
+            
+# candidates = list(combinations(chicken, m))
+
+# def city_chicken_distance(candidate):
+#     city_chicken_distance_val = 0
+
+#     for h1, h2 in house:
+#         chicken_distance_val = int(1e9)
+#         for c1, c2  in candidate:
+#             chicken_distance_val = min(chicken_distance_val, abs(h1 - c1) + abs(h2 - c2))
+        
+#         city_chicken_distance_val += chicken_distance_val
+        
+#     return city_chicken_distance_val
+
+# res = int(1e9)
+# for candidate in candidates:
+#     res = min(res, city_chicken_distance(candidate))
+    
+# print(res)
+
+'구현, 외벽 점검 TP'
+# from itertools import permutations
+# def solution(n, weak, dist):
+#     length = len(weak)
+#     for i in range(length):
+#         weak.append(weak[i] + n)
+        
+#     answer = len(dist) + 1
+    
+#     for start in range(length):
+
+#         for friends in list(permutations(dist, len(dist))):
+#             cnt = 1
+            
+#             last_check = weak[start] + friends[cnt - 1]
+            
+#             for index in range(start, start + length):
+                
+#                 if last_check < weak[index]:
+#                     cnt += 1
+                    
+#                     if cnt > len(dist):
+#                         break
+                    
+#                     last_check = weak[index] + friends[cnt - 1]
+        
+#             answer = min(answer, cnt)
+    
+#     if answer == len(dist) + 1:
+#         return -1
+#     return answer
+    
