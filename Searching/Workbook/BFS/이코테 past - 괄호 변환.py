@@ -8,7 +8,7 @@ def balanced_index(p):
             count -= 1
         if count == 0:
             return i
-
+    return 0
 # "올바른 괄호 문자열"인지 판단
 def check_proper(p):
     count = 0 # 왼쪽 괄호의 개수

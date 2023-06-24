@@ -413,64 +413,159 @@
 #     print(-1)
 
 'BFS/DFS, 연구소 TP'
-from copy import deepcopy
-from itertools import combinations
+# from copy import deepcopy
+# from itertools import combinations
 
-n, m = map(int, input().split())
+# n, m = map(int, input().split())
 
-data = []
+# data = []
 
-temp = [[0] * m for _ in range(n)]
-virus_posi = []
-no_wall = []
+# temp = [[0] * m for _ in range(n)]
+# virus_posi = []
+# no_wall = []
 
-for i in range(n):
-    data.append(list(map(int, input().split())))
-    for j in range(m):
-        check = data[i][j]
-        if check == 2:
-            virus_posi.append((i, j))
-        elif check == 0:
-            no_wall.append((i, j))
+# for i in range(n):
+#     data.append(list(map(int, input().split())))
+#     for j in range(m):
+#         check = data[i][j]
+#         if check == 2:
+#             virus_posi.append((i, j))
+#         elif check == 0:
+#             no_wall.append((i, j))
 
-total_combi = list(combinations(no_wall, 3))
+# total_combi = list(combinations(no_wall, 3))
 
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
+# dx = [-1, 0, 1, 0]
+# dy = [0, 1, 0, -1]
 
-res = 0
+# res = 0
 
-def virus(x, y):
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
+# def virus(x, y):
+#     for i in range(4):
+#         nx = x + dx[i]
+#         ny = y + dy[i]
         
-        if 0 <= nx < n and 0 <= ny < m:
-            if temp[nx][ny] == 0:
-                temp[nx][ny] = 2
-                virus(nx, ny)
+#         if 0 <= nx < n and 0 <= ny < m:
+#             if temp[nx][ny] == 0:
+#                 temp[nx][ny] = 2
+#                 virus(nx, ny)
                 
-def get_score():
-    score = 0
-    for i in range(n):
-        for j in range(m):
-            if temp[i][j] == 0:
-                score += 1
-    return score
+# def get_score():
+#     score = 0
+#     for i in range(n):
+#         for j in range(m):
+#             if temp[i][j] == 0:
+#                 score += 1
+#     return score
 
-def dfs():
-    global res
+# def dfs():
+#     global res
     
-    for combi in total_combi:
-        temp = deepcopy(data)
+#     for combi in total_combi:
+#         temp = deepcopy(data)
         
-        for x, y in combi:
-            temp[x][y] = 1
+#         for x, y in combi:
+#             temp[x][y] = 1
             
-        for x, y in virus_posi:
-            virus(x, y)
+#         for x, y in virus_posi:
+#             virus(x, y)
             
-        res = max(res, get_score())
+#         res = max(res, get_score())
         
-dfs()
-print(res)
+# dfs()
+# print(res)
+
+'BFS/DFS 경쟁적 전염 TP'
+# from collections import deque
+
+# n, k = map(int, input().split())
+
+# graph = []
+# data = []
+
+# for i in range(n):
+#     graph.append(list(map(int, input().split())))
+    
+#     for j in range(n):
+#         if graph[i][j] != 0:
+#             data.append((graph[i][j], 0, i, j))
+    
+# data.sort()
+# q = deque(data)
+
+# target_s, target_x, target_y = map(int, input().split())
+
+# dx = [-1, 0, 1, 0]
+# dy = [0, 1, 0, -1]
+
+# while q:
+#     virus_num, s, x, y = q.popleft()
+    
+#     if s == target_s:
+#         break
+    
+#     for i in range(4):
+#         nx = x + dx[i]
+#         ny = y + dy[i]
+        
+#         if 0 <= nx < n and 0 <= ny < n:
+#             if graph[nx][ny] == 0:
+#                 graph[nx][ny] = virus_num
+                
+#                 q.append((virus_num, s+1, nx, ny))
+                
+# print(graph[target_x - 1][target_y - 1])
+
+'DFS/BFS 괄호 변환'
+def cal_1(p):
+    cnt = 0
+    for i in range(len(p)):
+        if p[i] == '(':
+            cnt += 1
+        elif p[i] == ')':
+            cnt -= 1
+        
+        if cnt == 0:
+            return i
+        
+    return 0
+
+def cal_2(u):
+    cnt = 0
+    for i in u:
+        if i == '(':
+            cnt += 1
+
+        else:
+            if cnt == 0:
+              return False
+            cnt -= 1
+            
+    return True
+
+def solution(p):
+    answer = ''
+    if p == '':
+        return answer
+    
+    balanced_index = cal_1(p)
+    u = p[:balanced_index + 1]
+    v = p[balanced_index + 1:]
+    
+    if cal_2(u):
+        answer = u + solution(v)
+    else :
+        answer = '('
+        answer += solution(v)
+        answer += ')'
+        u = list(u[1:-1])
+        for i in range(len(u)):
+            if u[i] == '(':
+                u[i] = ')'
+            else:
+                u[i] = '('
+        
+        answer += "".join(u)
+        
+    return answer
+    
