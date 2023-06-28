@@ -34,7 +34,7 @@ def process(x, y, index):
                 if l <= abs(graph[nx][ny] - graph[x][y]) <= r:
                     # 다음 탐색을 위해 q에 넣고
                     q.append((nx, ny))
-                    # 해당 회차 방문했다는 체크
+                    # -1 -> index : 해당 회차 방문했다는 체크 (현재 문제에선 숫자 자체 의미 x)
                     union[nx][ny] = index
                     summary += graph[nx][ny]
                     cnt += 1
@@ -55,7 +55,7 @@ while True:
             # 해당 회차에서 처리되지 않았다면,
             if union[i][j] == -1:
                 process(i, j, index)
-                # 마지막 회차 체크용
+                # 마지막 회차에선 모든 원소 순회
                 index += 1
                 
     if index == n * n:

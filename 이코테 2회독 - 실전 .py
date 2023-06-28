@@ -517,55 +517,292 @@
 # print(graph[target_x - 1][target_y - 1])
 
 'DFS/BFS 괄호 변환'
-def cal_1(p):
-    cnt = 0
-    for i in range(len(p)):
-        if p[i] == '(':
-            cnt += 1
-        elif p[i] == ')':
-            cnt -= 1
+# def cal_1(p):
+#     cnt = 0
+#     for i in range(len(p)):
+#         if p[i] == '(':
+#             cnt += 1
+#         elif p[i] == ')':
+#             cnt -= 1
         
-        if cnt == 0:
-            return i
+#         if cnt == 0:
+#             return i
         
-    return 0
+#     return 0
 
-def cal_2(u):
-    cnt = 0
-    for i in u:
-        if i == '(':
-            cnt += 1
+# def cal_2(u):
+#     cnt = 0
+#     for i in u:
+#         if i == '(':
+#             cnt += 1
 
-        else:
-            if cnt == 0:
-              return False
-            cnt -= 1
+#         else:
+#             if cnt == 0:
+#               return False
+#             cnt -= 1
             
-    return True
+#     return True
 
-def solution(p):
-    answer = ''
-    if p == '':
-        return answer
+# def solution(p):
+#     answer = ''
+#     if p == '':
+#         return answer
     
-    balanced_index = cal_1(p)
-    u = p[:balanced_index + 1]
-    v = p[balanced_index + 1:]
+#     balanced_index = cal_1(p)
+#     u = p[:balanced_index + 1]
+#     v = p[balanced_index + 1:]
     
-    if cal_2(u):
-        answer = u + solution(v)
-    else :
-        answer = '('
-        answer += solution(v)
-        answer += ')'
-        u = list(u[1:-1])
-        for i in range(len(u)):
-            if u[i] == '(':
-                u[i] = ')'
-            else:
-                u[i] = '('
+#     if cal_2(u):
+#         answer = u + solution(v)
+#     else :
+#         answer = '('
+#         answer += solution(v)
+#         answer += ')'
+#         u = list(u[1:-1])
+#         for i in range(len(u)):
+#             if u[i] == '(':
+#                 u[i] = ')'
+#             else:
+#                 u[i] = '('
         
-        answer += "".join(u)
+#         answer += "".join(u)
         
-    return answer
+#     return answer
+
+'BFS/DFS, 연산자 끼워넣기 TP'
+## 순열 라이브러리
+# from itertools import permutations
+
+# n = int(input())
+# num = list(map(int, input().split()))
+# input_oper = list(map(int, input().split()))
+# oper = ['+', '-', '*', '//']
+
+# oper_data = []
+# for i in range(len(input_oper)):
+#     for _ in range(input_oper[i]):
+#         oper_data.append(oper[i])
     
+# max_val = -1e9-1
+# min_val = 1e9+1
+    
+# def sol():
+#     global max_val, min_val
+#     for case in set(permutations(oper_data, n - 1)):
+#         res = num[0]
+        
+#         for k in range(1, n):
+#             if case[k-1] == '+':
+#                 res += num[k]
+#             elif case[k-1] == '-':
+#                 res -= num[k]
+#             elif case[k-1] == '*':
+#                 res *= num[k]
+#             elif case[k-1] == '//':
+#                 if res < 0:
+#                     res = -1 * (-res // num[k])
+#                 else:
+#                     res = res // num[k]
+#         if res > max_val:
+#             max_val = max(res, max_val)
+#         if res < min_val:
+#             min_val = min(res, min_val)
+        
+# sol()
+# print(max_val)
+# print(min_val)
+
+## DFS (백 트래킹)
+# from itertools import permutations
+
+# n = int(input())
+# m = n - 1 
+# num = list(map(int, input().split()))
+# plus, minus, multi, divide = list(map(int, input().split()))
+# oper = ['+', '-', '*', '//']
+
+# max_val = -1e9-1
+# min_val = 1e9+1
+
+
+# def dfs(m, now):
+#     global max_val, min_val, plus, minus, multi, divide
+    
+#     if m == n:
+#         max_val = max(max_val, now)
+#         min_val = min(min_val, now)
+#         return
+    
+#     if plus > 0:
+#         plus -= 1
+#         dfs(m + 1, now + num[m])
+#         plus += 1
+#     if minus > 0:
+#         minus -= 1
+#         dfs(m + 1, now - num[m])
+#         minus += 1
+#     if multi > 0:
+#         multi -= 1
+#         dfs(m + 1, now * num[m])
+#         multi += 1
+#     if divide > 0:
+#         divide -= 1
+#         if now < 0:
+#           dfs(m + 1, -(-now // num[m]))
+#         else:
+#           dfs(m + 1, now // num[m])
+#         divide += 1
+
+# dfs(1, num[0])
+# print(max_val)
+# print(min_val)
+
+'BFS/DFS, 감시 피하기'
+# from itertools import combinations
+
+# n = int(input())
+# spaces = []
+# teacher = []
+# empty = []
+
+# # 선생님, 빈 공간 위치 저장
+# for i in range(n):
+#     spaces.append(input().split())    
+#     for j in range(n):
+#         if spaces[i][j] == 'T':
+#             teacher.append((i, j))
+#         if spaces[i][j] == 'X':
+#             empty.append((i, j))
+
+# def find_bad_student(tx, ty, i):
+#     # 동쪽
+#     if i == 0:
+#         while ty < n - 1:
+#             ty += 1
+#             if spaces[tx][ty] == 'S':
+#                 return True
+#             if spaces[tx][ty] == 'O':
+#                 return False
+        
+#     # 남쪽
+#     elif i == 1:
+#         while tx < n - 1:
+#             tx += 1
+#             if spaces[tx][ty] == 'S':
+#                 return True
+#             if spaces[tx][ty] == 'O':
+#                 return False
+#     # 서쪽
+#     elif i == 2:
+#         while ty > 0:
+#             ty -= 1
+#             if spaces[tx][ty] == 'S':
+#                 return True
+#             if spaces[tx][ty] == 'O':
+#                 return False
+#     # 북쪽
+#     elif i == 3:
+#         while tx > 0:
+#             tx -= 1
+#             if spaces[tx][ty] == 'S':
+#                 return True
+#             if spaces[tx][ty] == 'O':
+#                 return False
+        
+#     return False
+        
+
+# # 빈 공간에 벽 세우는 각각 경우
+# def sol():
+
+#     for empty_case in combinations(empty, 3):
+#         check = False
+#         for ox, oy in empty_case:
+#             spaces[ox][oy] = 'O'
+        
+#         # 각 선생님 마다 동,서,남,북 진행
+#         for tx, ty in teacher:
+#             for i in range(4):
+#                 if find_bad_student(tx, ty, i):
+#                     check = True
+        
+#         for ox, oy in empty_case:
+#             spaces[ox][oy] = 'X'
+            
+#         if not check:
+#             return True 
+        
+# if sol():
+#     print("YES")
+# else:
+#     print("NO")
+
+'BFS/DFS, 인구 이동 TP'
+# from collections import deque
+
+# n, l, r = map(int, input().split())
+# # 원본 맵 
+# maps = []
+# for _ in range(n):
+#     maps.append(list(map(int, input().split())))
+    
+# dx = [-1, 0, 1, 0]
+# dy = [0, -1, 0, 1]
+
+
+# def process(i, j, index):
+#     # 계산 정보
+#     united = []
+#     united.append((i, j))
+#     cnt = 1
+#     summary = maps[i][j]
+
+#     # 방문 정보
+#     union[i][j] = index
+
+#     # BFS 순회
+#     q = deque()
+#     q.append((i, j))
+    
+#     while q:
+#         x, y = q.popleft()
+        
+#         for i in range(4):
+#             nx = x + dx[i]
+#             ny = y + dy[i]
+        
+#             if 0 <= nx < n and 0 <= ny < n and union[nx][ny] == -1:
+#                 if l <= abs(maps[nx][ny] - maps[x][y]) <= r:
+#                     united.append((nx, ny))
+#                     summary += maps[nx][ny]
+#                     cnt += 1
+                    
+#                     union[nx][ny] = index
+                    
+#                     q.append((nx, ny))
+                    
+#     for x, y in united:
+#         maps[x][y] = summary // cnt
+                    
+            
+# total_cnt = 0
+
+# while True:
+#     union = [[-1] * n for _ in range(n)]
+#     index = 0
+    
+#     for i in range(n):
+#         for j in range(n):
+#             if union[i][j] == -1:
+#                 process(i, j, index)
+                
+#                 index += 1
+    
+#     if index == n * n:
+#         break
+    
+#     total_cnt += 1
+    
+# print(total_cnt)
+
+'BFS/DFS, 블록 이동 TP'

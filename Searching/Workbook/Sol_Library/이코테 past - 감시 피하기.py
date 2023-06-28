@@ -22,36 +22,36 @@ for i in range(n):
 def watch(x, y, direction):
     # 서쪽 감시
      if direction == 0:
-         while y >= 0:
+         while y > 0:
+             y -= 1
              if board[x][y] == 'S':
                  return True
              if board[x][y] == 'O':
                  return False
-             y -= 1
     # 북쪽 감시
      if direction == 1:
-         while x >= 0:
+         while x > 0:
+             x -= 1
              if board[x][y] == 'S':
                  return True
              if board[x][y] == 'O':
                  return False
-             x -= 1
     # 동쪽 감시
      if direction == 2:
-         while y < n:
+         while y < n - 1:
+             y += 1
              if board[x][y] == 'S':
                  return True
              if board[x][y] == 'O':
                  return False
-             y += 1
     # 남쪽 감시
      if direction == 3:
-         while x < n:
+         while x < n - 1:
+             x += 1
              if board[x][y] == 'S':
                  return True
              if board[x][y] == 'O':
                  return False
-             x += 1
              
     # 학생, 감시물이 걸리지 않았다면 감시 실패
      return False

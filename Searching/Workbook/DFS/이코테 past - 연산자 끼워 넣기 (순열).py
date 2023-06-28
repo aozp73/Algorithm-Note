@@ -13,8 +13,8 @@ for k in range(len(op_num)):
     for i in range(op_num[k]):
         op.append(op_list[k]) # ['+', '+', '+', '-', '*', '/']
 
-maximum = -1e9
-minimum = 1e9
+maximum = -1e9 - 1
+minimum = 1e9 + 1 
 
 
 def solve():
@@ -40,4 +40,3 @@ def solve():
 solve()
 print(maximum)
 print(minimum)
-print(len(list(permutations(op, N - 1))))
