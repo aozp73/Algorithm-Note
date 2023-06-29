@@ -2,7 +2,7 @@ from collections import deque
 
 def get_next_pos(pos, board):
     next_pos = [] # 현재 위치 기준, 비용 1로 이동 가능한 위치 저장
-    pos = list(pos) # 집합 -> 리스트 변환
+    pos = list(pos) # 집합 -> 리스트 변환 (집합: in으로 목표 좌표 검색)
     pos1_x, pos1_y, pos2_x, pos2_y = pos[0][0], pos[0][1]   , pos[1][0], pos[1][1]
 
     # 1. 상, 하, 좌, 우로 이동하는 경우 처리
