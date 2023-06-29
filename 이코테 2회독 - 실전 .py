@@ -929,3 +929,158 @@
 #     heapq.heappush(heap, sum_value)
     
 # print(res)
+
+
+'이진 탐색, 정렬된 배열에서 특정 수의 개수 구하기'
+# bisect 라이브러리
+# from bisect import bisect_left, bisect_right
+
+# def cnt_by_range(array, left_value, right_value):
+#     right_index = bisect_right(array, right_value)
+#     left_index = bisect_left(array, left_value)
+#     print("right_index : " + str(right_index))
+#     print("left_index : " + str(left_index))
+#     return right_index - left_index
+
+# n, x = map(int, input().split())
+# data = list(map(int, input().split()))
+
+# cnt = cnt_by_range(data, x, x)
+
+# if cnt == 0:
+#     print(-1)
+# else:
+#     print(cnt)
+
+# 이진 탐색 직접 구현
+# def cnt_by_value(array, x):
+#     # 데이터의 개수
+#     n = len(array)
+    
+#     # x가 처음 등장한 인덱스 계산
+#     a = first(array, x, 0, n - 1)
+    
+#     # x가 마지막으로 등장한 인덱스 계산
+#     b = last(array, x, 0, n - 1)
+    
+#     if a == None or b == None:
+#         return 0 # 값이 x인 원소의 개수는 0개이므로 0 반환
+#     # 개수 반환
+#     return b - a + 1
+
+# def first(array, target, start, end):
+#     if start > end:
+#         return None
+    
+#     mid = (start + end) // 2
+#     if (mid == 0 or target > array[mid - 1]) and array[mid] == target:
+#         return mid
+#     elif array[mid] >= target:
+#         return first(array, target, start, mid - 1)
+#     else:
+#         return first(array, target, mid + 1, end)
+    
+# def last(array, target, start, end):
+    
+#     if start > end:
+#         return None
+    
+#     mid = (start + end) // 2
+#     if (mid == n - 1 or target < array[mid + 1]) and array[mid] == target:
+#         return mid
+#     elif array[mid] > target:
+#         return last(array, target, start, mid - 1)
+#     else:
+#         return last(array, target, mid + 1, end)
+    
+# n, x = map(int, input().split())
+# array = list(map(int, input().split()))
+
+# cnt = cnt_by_value(array, x)
+
+# if cnt == 0:
+#     print(-1)
+# else:
+#     print(cnt)
+
+'이진 탐색, 고정점 찾기'
+# def binary_search(array, start, end):
+#     if start > end:
+#         return None
+    
+#     mid = (start + end) // 2
+    
+#     if mid == array[mid]:
+#         return array[mid]
+#     elif mid < array[mid]:
+#         return binary_search(array, start, mid - 1)
+#     else:
+#         return binary_search(array, mid + 1, end)
+    
+# n = int(input())
+# data = list(map(int, input().split()))
+
+# res = binary_search(data, 0, n - 1)
+# print(-1) if res == None else print(res)
+
+'이진 탐색, 공유기 설치 TP'
+# n, c = list(map(int, input().split()))
+
+# array = []
+# for _ in range(n):
+#     array.append(int(input()))
+# array.sort()
+
+# start = 1
+# end = array[-1] - array[0]
+# res = 0
+
+# while(start <= end):
+#     mid = (start + end) // 2
+#     value = array[0]
+#     cnt = 1
+    
+#     for i in range(1, n):
+#         if array[i] >= value + mid:
+#             value = array[i]
+#             cnt += 1
+        
+#     if cnt >= c:
+#         start = mid + 1
+#         res = mid
+#     else:
+#         end = mid - 1
+        
+# print(res)
+
+'이진 탐색, 가사 검색 TP'
+# from bisect import bisect_left, bisect_right
+
+# def cnt_by_range(a, left_value, right_value):
+#     right_index = bisect_right(a, right_value)
+#     left_index = bisect_left(a, left_value)
+    
+#     return right_index - left_index
+
+# array = [[] for _ in range(10001)]
+# reversed_array = [[] for _ in range(10001)]
+
+# def solution(words, queries):
+#     answer = []
+    
+#     for word in words:
+#         array[len(word)].append(word)
+#         reversed_array[len(word)].append(word[::-1])
+    
+#     for i in range(10001):
+#         array[i].sort()
+#         reversed_array[i].sort()
+    
+#     for q in queries:
+#         if q[0] != '?':
+#             res = cnt_by_range(array[len(q)], q.replace('?', 'a'), q.replace('?', 'z'))
+#         else:
+#             res = cnt_by_range(reversed_array[len(q)], q.replace('?', 'a'), q.replace('?', 'z'))
+#         answer.append(res)
+        
+#     return answer
