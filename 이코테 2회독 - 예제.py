@@ -874,3 +874,161 @@
 #         result.append(i)
         
 # print(max_node, max_distance, len(result))
+
+'그래프, 여행 계획'
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else:
+#         parent[a] = b
+        
+# n, m = map(int, input().split())
+# parent = [0] * (n + 1)
+
+# for i in range(1, n + 1):
+#     parent[i] = i
+    
+# for i in range(n):
+#     data = list(map(int, input().split()))
+#     for j in range(n):
+#         if data[j] == 1:
+#             union_parent(parent, i + 1, j + 1)
+
+# plan = list(map(int, input().split()))
+# res = True
+
+# for i in range(m - 1):
+#     if find_parent(parent, plan[i]) != find_parent(parent, plan[i + 1]):
+#        res = False
+        
+# if res:
+#     print("YES")
+# else:
+#     print("NO")
+
+'그래프, 탑승구'
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else:
+#         parent[a] = b
+        
+# g = int(input())
+# p = int(input())
+# parent = [0] * (g + 1)
+
+# for i in range(1, g + 1):
+#     parent[i] = i
+
+# res = 0
+# for _ in range(p):
+#     data = find_parent(parent, int(input()))
+    
+#     if data == 0:
+#         break
+#     union_parent(parent, data, data - 1)
+#     res += 1
+# print(res)
+
+'그래프, 어두운 길'
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else:
+#         parent[a] = b
+        
+# n, m = map(int, input().split())
+# parent = [0] * (n + 1)
+
+# for i in range(1, n + 1):
+#     parent[i] = i
+    
+# edges = []
+# res = 0
+# for _ in range(m):
+#     x, y, z = map(int, input().split())
+#     edges.append((z, x, y))
+    
+# edges.sort()
+# total = 0
+
+# for edge in edges:
+#     cost, a, b = edge
+#     total += cost
+    
+#     if find_parent(parent, a) != find_parent(parent, b):
+#         union_parent(parent, a, b)
+#         res += cost
+        
+# print(total - res)
+
+'그래프, 행성 터널'
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+# # union
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else :
+#         parent[a] = b
+        
+# n = int(input())
+# parent = [0] * (n + 1)
+# for i in range(1, n + 1):
+#     parent[i] = i
+    
+# edges = []
+# res = 0
+
+# x = []
+# y = []
+# z = []
+
+# for i in range(1, n + 1):
+#     data = list(map(int, input().split()))
+#     x.append((data[0], i))
+#     y.append((data[1], i))
+#     z.append((data[2], i))
+    
+# x.sort()
+# y.sort()
+# z.sort()
+
+# for i in range(n - 1):
+#     edges.append((x[i + 1][0] - x[i][0], x[i][1], x[i + 1][1]))
+#     edges.append((y[i + 1][0] - y[i][0], y[i][1], y[i + 1][1]))
+#     edges.append((z[i + 1][0] - z[i][0], z[i][1], z[i + 1][1]))
+
+# edges.sort()
+# for edge in edges:
+#     cost, a, b = edge
+#     if find_parent(parent, a) != find_parent(parent, b):
+#         union_parent(parent, a, b)
+#         res += cost
+        
+# print(res)
