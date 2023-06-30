@@ -692,27 +692,185 @@
 # # print(array)
 
 '다이나믹, 편집거리 TP'
-def edit_dist(str1, str2):
-    n = len(str1)
-    m = len(str2)
+# def edit_dist(str1, str2):
+#     n = len(str1)
+#     m = len(str2)
     
-    dp = [[0] * (m + 1) for _ in range(n + 1)]
+#     dp = [[0] * (m + 1) for _ in range(n + 1)]
     
-    for i in range(1, n + 1):
-        dp[i][0] = i
-    for j in range(1, m + 1):
-        dp[0][j] = j
+#     for i in range(1, n + 1):
+#         dp[i][0] = i
+#     for j in range(1, m + 1):
+#         dp[0][j] = j
         
-    for i in range(1, n + 1):
-        for j in range(1, m + 1):
-            if str1[i - 1] == str2[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1]
-            else:
-                dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j] ,dp[i - 1][j - 1])
+#     for i in range(1, n + 1):
+#         for j in range(1, m + 1):
+#             if str1[i - 1] == str2[j - 1]:
+#                 dp[i][j] = dp[i - 1][j - 1]
+#             else:
+#                 dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j] ,dp[i - 1][j - 1])
     
-    return dp[n][m]
+#     return dp[n][m]
 
-str1 = input()
-str2 = input()
+# str1 = input()
+# str2 = input()
 
-print(edit_dist(str1, str2))
+# print(edit_dist(str1, str2))
+
+
+'최단 경로, 플로이드'
+# INF = int(1e9)
+
+# n = int(input())
+# m = int(input())
+
+# graph = [[INF] * (n + 1) for _ in range(n + 1)]
+
+# for a in range(1, n + 1):
+#     for b in range(1, n + 1):
+#         if a == b:
+#             graph[a][b] = 0
+            
+# for _ in range(m):
+#     a, b, c = map(int, input().split())
+#     if c < graph[a][b]:
+#         graph[a][b] = c
+        
+# for k in range(1, n + 1):
+#     for a in range(1, n + 1):
+#         for b in range(1, n + 1):
+#             graph[a][b] = min(graph[a][b], graph[a][k]+graph[k][b])
+            
+# for a in range(1, n + 1):
+#     for b in range(1, n + 1):
+#         if graph[a][b] == INF:
+#             print(0, end=" ")
+#         else:
+#             print(graph[a][b], end=" ")
+            
+#     print()
+
+'최단 경로, 정확한 순위'
+# INF = int(1e9)
+
+# n, m = map(int, input().split())
+# graph = [[INF] * (n + 1) for _ in range(n + 1)]
+
+# for a in range(1, n + 1):
+#     for b in range(1, n + 1):
+#         if a == b:
+#             graph[a][b] = 0
+            
+# for _ in range(m):
+#     a, b = map(int, input().split())
+#     graph[a][b] = 1
+    
+# for k in range(1, n + 1):
+#     for a in range(1, n + 1):
+#         for b in range(1, n + 1):
+#             graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+
+# res = 0
+# for i in range(1, n + 1):
+#     cnt = 0
+#     for j in range(1, n + 1):
+#         if graph[i][j] != INF or graph[j][i] != INF:
+#             cnt += 1
+            
+#         if cnt == n:
+#             res += 1
+            
+# print(res)
+
+'최단 거리, 화성 탐사'
+# import heapq
+# import sys
+# inpu = sys.stdin.readline
+# INF = int(1e9)
+
+# dx = [-1, 0, 1, 0]
+# dy = [0, 1, 0, -1]
+
+# for tc in range(int(input())):
+#     n = int(input())
+    
+#     graph = []
+#     for i in range(n):
+#         graph.append(list(map(int, input().split())))
+    
+#     distance = [[INF] * n for _ in range(n)]
+    
+#     x, y = 0, 0
+#     q = [(graph[x][y], x, y)]
+#     distance[x][y] = graph[x][y]
+    
+#     while q:
+#         dist, x, y = heapq.heappop(q)
+        
+#         if distance[x][y] < dist:
+#             continue
+#         for i in range(4):
+#             nx = x + dx[i]
+#             ny = y + dy[i]
+            
+#             if nx < 0 or nx >= n or ny < 0 or ny >= n:
+#                 continue
+#             cost = dist + graph[nx][ny]
+            
+#             if cost < distance[nx][ny]:
+#                 distance[nx][ny] = cost
+#                 heapq.heappush(q, (cost, nx, ny))
+                
+#     print(distance[n - 1][n - 1])
+
+'최단 거리, 숨바꼭질'
+# import heapq
+# import sys
+# input = sys.stdin.readline
+# INF = int(1e9)
+
+# n, m = map(int, input().split())
+# start = 1
+
+# graph = [[] for i in range(n + 1)]
+# distance = [INF] * (n + 1)
+
+# for _ in range(m):
+#     a, b = map(int, input().split())
+#     graph[a].append((b, 1))
+#     graph[b].append((a, 1))
+    
+# def dijkstra(start):
+#     q = []
+    
+#     heapq.heappush(q, (0, start))
+#     distance[start] = 0
+    
+#     while q:
+#         dist, now = heapq.heappop(q)
+        
+#         if distance[now] < dist:
+#             continue
+        
+#         for i in graph[now]:
+#             cost = dist + i[1]
+            
+#             if cost < distance[i[0]]:
+#                 distance[i[0]] = cost
+#                 heapq.heappush(q, (cost, i[0]))
+                
+# dijkstra(start)
+
+# max_node = 0
+# max_distance = 0
+# result = []
+
+# for i in range(1, n + 1):
+#     if max_distance < distance[i]:
+#         max_node = i
+#         max_distance = distance[i]
+#         result = [max_node]
+#     elif max_distance == distance[i]:
+#         result.append(i)
+        
+# print(max_node, max_distance, len(result))
