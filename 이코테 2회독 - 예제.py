@@ -567,3 +567,152 @@
 #         print(res[i])
 
 # topology_sort()
+
+
+'다이나믹, 금광'
+# for tc in range(int(input())):
+#     n, m = map(int, input().split())
+#     data = list(map(int, input().split()))
+
+#     maps = []
+#     index = 0
+#     for i in range(n):
+#         maps.append(data[index:index+m])
+#         index += m
+    
+#     for j in range(1, m):
+#         for i in range(n):
+            
+#             # 왼쪽 위에서
+#             if i == 0:
+#                 left_up = 0
+#             else:
+#                 left_up = maps[i - 1][j - 1]
+                
+#             # 왼쪽에서
+#             left = maps[i][j-1]
+
+#             # 왼쪽 아래에서
+#             if i == n - 1:
+#                 left_down = 0
+#             else:
+#                 left_down = maps[i + 1][j - 1]
+
+#             maps[i][j] = maps[i][j] + max(left_up, left, left_down)
+                
+#     res = 0
+#     for i in range(n):
+#         res = max(res, maps[i][m-1])
+        
+#     print(res)
+    
+'다이나믹, 정수 삼각형'
+# n = int(input())
+# array = []
+
+# for _ in range(n):
+#     array.append(list(map(int, input().split())))
+
+# sum_val = array[0][0]
+# for i in range(1, n):
+#     for j in range(len(array[i])):
+#         if j == 0:
+#             array[i][j] = array[i][j] + array[i-1][j]
+#             continue
+#         elif j == len(array[i]) - 1:
+#             array[i][j] = array[i][j] + array[i-1][j-1]
+#             continue
+        
+#         left_up = array[i-1][j-1]
+#         right_up = array[i-1][j]
+        
+#         array[i][j] = array[i][j] + max(left_up, right_up)
+
+# print(max(array[n - 1]))
+
+'다이나믹, 퇴사 TP'
+# n = int(input())
+# t = []
+# p = []
+# dp = [0] * (n + 1)
+# max_value = 0
+
+# for _ in range(n):
+#     x, y = map(int, input().split())
+#     t.append(x)
+#     p.append(y)
+
+# for i in range(n - 1, -1, -1):
+#     time = t[i] + i
+    
+#     if time <= n:
+#         dp[i] = max(p[i] + dp[time], max_value)
+#         max_value=dp[i]
+#     else:
+#         dp[i] = max_value
+        
+# print(max_value)
+
+'다이나믹, 병사 배치하기 TP'
+# n = int(input())
+# array = list(map(int, input().split()))
+
+# array.reverse()
+# tp = [1] * n
+
+# for i in range(1, n):
+#     for j in range(0, i):
+#         if array[j] > array[i]:
+#             tp[i] = max(tp[i], tp[j] + 1)
+            
+# print(n - max(tp))
+
+'다이나믹, 못생긴 수 TP'
+# n = int(input())
+
+# array = [0] * n
+# array[0] = 1
+# i2 = i3 = i5 = 0
+# next2, next3, next5 = 2, 3, 5
+
+# for i in range(1, n):
+#     input_val = min(next2, next3, next5)
+
+#     if array[i] == next2:
+#         i2 += 1
+#         next2 = array[i2] * 2
+#     if array[i] == next3:
+#         i3 += 1
+#         next3 = array[i3] * 3
+#     if array[i] == next5:
+#         i5 += 1
+#         next5 = array[i5] * 5
+
+# print(array[n - 1])
+# # print(array)
+
+'다이나믹, 편집거리 TP'
+def edit_dist(str1, str2):
+    n = len(str1)
+    m = len(str2)
+    
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        dp[i][0] = i
+    for j in range(1, m + 1):
+        dp[0][j] = j
+        
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j] ,dp[i - 1][j - 1])
+    
+    return dp[n][m]
+
+str1 = input()
+str2 = input()
+
+print(edit_dist(str1, str2))
